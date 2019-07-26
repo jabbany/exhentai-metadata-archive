@@ -1,5 +1,12 @@
 # exhentai-metadata-archive
 Archival JSONL dump of the exhentai metadata from the community crawl.
+In case you want to do some machine learning with it.
+
+## Files
+The dataset is compressed and can be found in `data/`. The current version 
+contains the `no CG, no cosplay` pages.
+
+An uncompressed `100`-record sample can be found in `data/sample-100.jsonl`.
 
 ## Schema
 - `id`: Gallery id in the form of `g/*/*`
