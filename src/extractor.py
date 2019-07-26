@@ -54,27 +54,42 @@ def extract_record(item):
 		'tags': tags
 	}
 
+def get_blacklist():
+	blacklisted = set()
+	with open('blacklist.txt', 'r') as f:
+		for line in f:
+			blacklisted.add(line.strip())
+	return blacklisted
+
 if __name__ == '__main__':
-	import sys
+	import sys, os
 	if len(sys.argv) < 3:
 		print('Usage: {} [path] [count]'.format(sys.argv[0]))
 		print('    [path] - Path containing the page dumps')
 		print('    [count] - Number of pages dumped (page # of last page)')
 		exit(1)
 	
+	# Read the blacklist
+	blacklist = get_blacklist()
+	
 	records = {}
 	extracted = 0
-	for i in range(1, int(sys.argv[2]) + 1):
-		with open('{}/exhentai_page_{}.html'.format(sys.argv[1], i), 'r') as f:
-			soup = BeautifulSoup(f.read(), 'html.parser')
-			print('Page {}:'.format(i))
-			# Get the gallery table
-			table = soup.find_all('table', class_='itg glte')[0]
-			for item in table.find_all('tr', recursive=False):
-				record = extract_record(item)
-				records[record['id']] = record
-				extracted += 1
-				print(' Extracted record {}'.format(extracted))
+	for i in range(10000, int(sys.argv[2]) + 1):
+		filename = 'exhentai_page_{}.html'.format(i)
+		if filename in blacklist:
+			print('Page {}: Blacklisted! Skipping!')
+		else:
+			
+			with open(os.path.join(sys.argv[1], filename), 'r') as f:
+				soup = BeautifulSoup(f.read(), 'html.parser')
+				print('Page {}:'.format(i))
+				# Get the gallery table
+				table = soup.find_all('table', class_='itg glte')[0]
+				for item in table.find_all('tr', recursive=False):
+					record = extract_record(item)
+					records[record['id']] = record
+					extracted += 1
+					print(' Extracted record {}'.format(extracted))
 
 	print('Total of {} unique records'.format(len(records)))
 

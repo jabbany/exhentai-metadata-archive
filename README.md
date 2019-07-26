@@ -13,3 +13,9 @@ Archival JSONL dump of the exhentai metadata from the community crawl.
     - `namespace`: Namespace of tag (for `misc:` this will be blank)
     - `tag`: Tag
     - `confident`: 1 if the tag passed the power threshold (solid border) otherwise 0
+    
+## Blacklist
+Certain files from the community dump were blacklisted because they were the
+wrong format (in "Minimal" view). These are ignored because the current script 
+cannot handle the minimal page format and these pages do not have tag 
+information for the galleries which arguably is the whole point of this export.
