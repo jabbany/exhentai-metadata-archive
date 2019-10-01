@@ -74,7 +74,7 @@ if __name__ == '__main__':
 	
 	records = {}
 	extracted = 0
-	for i in range(10000, int(sys.argv[2]) + 1):
+	for i in range(1, int(sys.argv[2]) + 1):
 		filename = 'exhentai_page_{}.html'.format(i)
 		if filename in blacklist:
 			print('Page {}: Blacklisted! Skipping!')
